@@ -1,0 +1,22 @@
+//
+//  ShareAccount.h
+//  EastDay
+//
+//  Created by Yang on 13-9-10.
+//  Copyright (c) 2013年 EastDay. All rights reserved.
+//
+
+//这个里面不用了
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+
+
+@interface ShareAccount : NSManagedObject
+
+@property (nonatomic, retain) NSString * access_token;
+@property (nonatomic, retain) NSNumber * access_type;
+@property (nonatomic, retain) NSString * password;
+@property (nonatomic, retain) NSNumber * typeid;
+@property (nonatomic, retain) NSString * username;
+
+@end

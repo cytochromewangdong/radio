@@ -1,0 +1,95 @@
+//
+//  OfflineDataHelper.m
+//  EastDay
+//
+//  Created by Yang on 13-10-4.
+//  Copyright (c) 2013年 EastDay. All rights reserved.
+//
+
+#import "OfflineDataHelper.h"
+#import "EastDayAppDelegate.h"
+#import "EntityOffLineCache.h"
+#import "Subscriptioned.h"
+#import "Subscription.h"
+@interface OfflineDataHelper()
+@property (nonatomic, strong)NSManagedObjectContext *context;
+
+@end
+@implementation OfflineDataHelper
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        EastDayAppDelegate *appDelegate = (EastDayAppDelegate *)[[UIApplication sharedApplication] delegate];
+        self.context = appDelegate.managedObjectContext;
+    }
+    return self;
+}
+
++(id)sharedHelper {
+    static OfflineDataHelper *sharedMyManager = nil;
+    
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken,^{ sharedMyManager = [[self alloc] init];});
+    
+    return sharedMyManager;
+}
+
+//离线的是啥这里取出来就是啥，不用做对比
+-(NSMutableArray *)getMySub{
+    NSFetchRequest *fetch = [[NSFetchRequest alloc] initWithEntityName:kEntitySubscription];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"no" ascending:YES];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [fetch setSortDescriptors:sortDescriptors];
+    NSError *error = nil;
+    NSArray *allItems = [self.context executeFetchRequest:fetch error:&error];
+    
+    NSFetchRequest *subIdRequest = [[NSFetchRequest alloc] initWithEntityName:kEntitySubed];
+    
+    NSError *subError = nil;
+    NSArray *allSubedId = [self.context executeFetchRequest:subIdRequest error:&subError];
+    
+    //这里需要对比下
+    
+    if (!error){
+        if ([allSubedId count]<1){
+            return allItems;
+        } else {
+            NSMutableArray *tempArray = [[NSMutableArray alloc] init];
+            for(Subscription *tempSubId in allItems){
+                for (Subscriptioned *tempSubItems in allSubedId){
+                    if ([tempSubItems.subid isEqualToString:tempSubId.classid]){
+                        [tempArray addObject:tempSubItems];
+                    }
+                }
+            }
+            
+            return [tempArray mutableCopy];
+        }
+    }
+    
+    return nil;
+}
+
+-(NSMutableArray *)getSubList:(NSString *)classUrl{
+    NSFetchRequest *fetch = [[NSFetchRequest alloc] initWithEntityName:kEntitySyncCache];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"classurl=%@",classUrl];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"news_time" ascending:YES];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [fetch setSortDescriptors:sortDescriptors];
+    [fetch setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSMutableArray *result = [[self.context executeFetchRequest:fetch error:&error] mutableCopy];
+    if (!error){
+        return result;
+    } else {
+        return nil;
+    }
+    
+}
+
+
+@end

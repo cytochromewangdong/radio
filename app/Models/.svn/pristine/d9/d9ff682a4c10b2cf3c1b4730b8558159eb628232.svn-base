@@ -1,0 +1,265 @@
+//
+//  SimpleRow.m
+//  ExampleApp
+//
+//  Created by wang dong on 4/13/14.
+//  Copyright (c) 2014 Thong Nguyen. All rights reserved.
+//
+
+#import "SimpleRow.h"
+@implementation SimpleTopicGroupItem : NSObject
+@end
+@implementation SimpleRow
+-(EntityMp3*) convertToMp3Item
+{
+    EntityMp3 *mp3Item = [[EntityMp3 alloc] init];
+    mp3Item.docId = self.id;
+    mp3Item.detailUrl = self.titleurl;
+    mp3Item.title = self.title;
+    mp3Item.mp3Url = self.audio;
+    return mp3Item;
+}
+
+@dynamic parentclassid;
+-(NSString*) parentclassid
+{
+    return [self.dataDict valueForKey:@"parentclassid"];
+}
+-(void) setParentclassid:(NSString *)parentclassid
+{
+    [self.dataDict setValue:parentclassid forKey:@"parentclassid"];
+}
+
+
+@dynamic articletype;
+-(NSString*) articletype
+{
+    return [self.dataDict valueForKey:@"articletype"];
+}
+-(void) setArticletype:(NSString *)articletype
+{
+    [self.dataDict setValue:articletype forKey:@"articletype"];
+}
+
+//@property (weak)NSString* newstime;
+//@property (weak)NSString* timestamp;
+
+@dynamic title;
+-(NSString*) title
+{
+    return [self.dataDict valueForKey:@"title"];
+}
+-(void) setTitle:(NSString *)title
+{
+    [self.dataDict setValue:title forKey:@"title"];
+}
+@dynamic oldtitle;
+-(NSString*) oldtitle
+{
+    return [self.dataDict valueForKey:@"oldtitle"];
+}
+-(void) setOldtitle:(NSString *)oldtitle
+{
+    [self.dataDict setValue:oldtitle forKey:@"oldtitle"];
+}
+@dynamic newstime;
+-(NSString*) newstime
+{
+    return [self.dataDict valueForKey:@"newstime"];
+}
+-(void) setNewstime:(NSString *)newstime
+{
+    [self.dataDict setValue:newstime forKey:@"newstime"];
+}
+@dynamic timestamp;
+-(NSString*) timestamp
+{
+    return [self.dataDict valueForKey:@"timestamp"];
+}
+-(void) setTimestamp:(NSString *)timestamp
+{
+    [self.dataDict setValue:timestamp forKey:@"timestamp"];
+}
+//@property (weak)NSString* imgurl;
+@dynamic imgurl;
+-(NSString*) imgurl
+{
+    return [self.dataDict valueForKey:@"imgurl"];
+}
+-(void) setImgurl:(NSString *)imgurl
+{
+    [self.dataDict setValue:imgurl forKey:@"imgurl"];
+}
+//@property (weak)NSString* titleurl;
+@dynamic titleurl;
+-(NSString*) titleurl
+{
+    NSString *titleUrl = [self.dataDict valueForKey:@"titleurl"];
+    if(!titleUrl)
+    {
+       titleUrl = [self.dataDict valueForKey:@"url"];
+    }
+    return titleUrl;
+}
+-(void) setTitleurl:(NSString *)titleurl
+{
+    [self.dataDict setValue:titleurl forKey:@"titleurl"];
+}
+//@property (weak)NSString* audio;
+@dynamic audio;
+-(NSString*) audio
+{
+    NSString* audioURL = [self.dataDict valueForKey:@"audio"];
+    if(!audioURL)
+    {
+        audioURL = [self.dataDict valueForKey:@"Audio"];
+    }
+    return audioURL;
+}
+-(void) setAudio:(NSString *)audio
+{
+    [self.dataDict setValue:audio forKey:@"audio"];
+}
+//@property (weak)NSString* sourcename;
+@dynamic sourcename;
+-(NSString*) sourcename
+{
+    return [self.dataDict valueForKey:@"sourcename"];
+}
+-(void) setSourcename:(NSString *)sourcename
+{
+    [self.dataDict setValue:sourcename forKey:@"sourcename"];
+}
+//@property (weak)NSString* desc;
+@dynamic desc;
+-(NSString*) desc
+{
+    return [self.dataDict valueForKey:@"desc"];
+}
+-(void) setDesc:(NSString *)desc
+{
+    [self.dataDict setValue:desc forKey:@"desc"];
+}
+@dynamic no;
+-(NSString*) no
+{
+    return [self.dataDict valueForKey:@"no"];
+}
+-(void) setNo:(NSString*) no
+{
+    [self.dataDict setValue: no forKey:@"no"];
+}
+@dynamic imgurl1;
+-(NSString*) imgurl1
+{
+    return [self.dataDict valueForKey:@"imgurl1"];
+}
+-(void) setImgurl1:(NSString *)imgurl1
+{
+    [self.dataDict setValue:imgurl1 forKey:@"imgurl1"];
+}
+@dynamic imgurl2;
+-(NSString*) imgurl2
+{
+    return [self.dataDict valueForKey:@"imgurl2"];
+}
+-(void) setImgurl2:(NSString *)imgurl2
+{
+    [self.dataDict setValue:imgurl2 forKey:@"imgurl2"];
+}
+@dynamic imgurl3;
+-(NSString*) imgurl3
+{
+    return [self.dataDict valueForKey:@"imgurl3"];
+}
+-(void) setImgurl3:(NSString *)imgurl3
+{
+    [self.dataDict setValue:imgurl3 forKey:@"imgurl3"];
+}
+
+@dynamic icontype;
+-(NSString*) icontype
+{
+    return [self.dataDict valueForKey:@"icontype"];
+}
+-(void) setIcontype:(NSString *)icontype
+{
+    [self.dataDict setValue:icontype forKey:@"icontype"];
+}
+
+@dynamic src;
+
+-(NSString*) src
+{
+return [self.dataDict valueForKey:@"src"];
+}
+-(void) setSrc:(NSString *)src
+{
+    [self.dataDict setValue:src forKey:@"src"];
+}
+@dynamic name;
+
+-(NSString*) name
+{
+    return [self.dataDict valueForKey:@"name"];
+}
+-(void) setName:(NSString *)name
+{
+    [self.dataDict setValue:name forKey:@"name"];
+}
+-(NSString*) module
+{
+    NSString* m = [self.dataDict valueForKey:@"module"];
+    if(!m)
+    {//wz_mudole
+         m = [self.dataDict valueForKey:@"wz_mudole"];
+    }
+    return m;
+}
+-(void) setModule:(NSString *)module
+{
+    [self.dataDict setValue:module forKey:@"module"];
+    [self.dataDict setValue:module forKey:@"wz_mudole"];
+}
+@dynamic enabled;
+-(NSString*) enabled
+{
+    return [self.dataDict valueForKey:@"enabled"];
+}
+-(void)setEnabled:(NSString*)enabled
+{
+    [self.dataDict setValue:enabled forKey:@"enabled"];
+}
+
+@dynamic moreurl;
+-(NSString*) moreurl
+{
+    return [self.dataDict valueForKey:@"moreurl"];
+}
+-(void) setMoreurl:(NSString *)moreurl
+{
+    [self.dataDict setValue:moreurl forKey:@"moreurl"];
+}
+
+
+@dynamic idleaf;
+-(NSString*) idleaf
+{
+    return [self.dataDict valueForKey:@"idleaf"];
+}
+-(void) setIdleaf:(NSString *)idleaf
+{
+    [self.dataDict setValue:idleaf forKey:@"idleaf"];
+}
+@dynamic ancestor_id;
+-(NSString*) ancestor_id
+{
+    return [self.dataDict valueForKey:@"ancestor_id"];
+}
+-(void) setAncestor_id:(NSString *)ancestor_id
+{
+    [self.dataDict setValue:ancestor_id forKey:@"ancestor_id"];
+}
+
+
+@end

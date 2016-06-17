@@ -1,0 +1,144 @@
+﻿<!DOCTYPE HTML>
+<html ><!--manifest="cache.manifest"-->
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="target-densitydpi=device-dpi" />
+  <link rel="stylesheet" type="text/css" href="jquery.mobile-1.4.3.min.css" />
+  <link rel="stylesheet" type="text/css" href="common.css" />
+  <style>
+	
+label.ui-checkbox-on{
+	background: transparent;
+	border-color: #38c;
+	color: #555;
+	text-shadow: 0 0px 0 #000;
+}
+  </style>
+  <script src="jquery-2.1.1.min.js"></script>
+  <script src="jquery.mobile-1.4.3.min.js"></script>
+  
+  <script>
+	var counter = 0, isSync;
+	function progress(count){
+		counter++;
+		var width = $("#sync_progress").width()-2;
+		
+		var w = Math.ceil(width/count*counter);
+		
+		if(w>width)
+			w = $("#sync_progress").width()-2;
+		
+		$("#count").text(count);
+		$("#counter").text(counter);
+		$("#sync_progress div#bar").width(w);
+	};
+	
+	function finished(){
+		//alert("同步完成");
+		$("#btn_start_sync").removeClass("syncing").text("Sync finished");
+		isSync = false;
+	};
+  function error(){
+      //alert("同步完成");
+      $("#btn_start_sync").removeClass("syncing").text("Sync");
+      isSync = false;
+  };
+  
+    
+	$(function(){
+		if(window.localStorage && !window.localStorage.syncUrl){
+			window.localStorage.syncUrl = "10.160.247.150";
+		}
+		$("#url").val(window.localStorage.syncUrl);
+      if(window.localStorage&&window.localStorage.username)
+      {
+		$("#username").val(window.localStorage.username);
+      }
+      
+      if(window.localStorage&&window.localStorage.password)
+      {
+		$("#password").val(window.localStorage.password);
+      }
+      if(window.localStorage&&window.localStorage.path)
+      {
+        $("#path").val(window.localStorage.path);
+      }
+      $(".btn_back").show();
+		
+		$("#btn_start_sync").on("tap", function(){
+            window.localStorage.syncUrl = $("#url").val();
+            window.localStorage.url = $("#url").val()
+            window.localStorage.username = $("#username").val()
+            window.localStorage.password = $("#password").val()
+            window.localStorage.path = $("#path").val()
+			$(this).addClass("syncing").text("Doing sync...");
+			isSync = true;
+            $.post(
+                   "http://localcall/sync",
+                    {
+                        url:$("#url").val(),
+                        username: $("#username").val(),
+                        password: $("#password").val(),
+                        path: $("#path").val()
+                    },
+                    function(res){
+                        counter = 0;
+                    }
+            );
+		});
+		$("#btn_setting").on("tap", function(){
+			$(".dialog").fadeIn();
+		});
+		
+		$("#btn_submit").on("tap", function(){
+            window.localStorage.syncUrl = $("#url").val();
+            window.localStorage.username = $("#username").val();
+            window.localStorage.password = $("#password").val();
+            window.localStorage.path = $("#path").val();
+			$(".dialog").fadeOut();
+		});
+		
+		$(".btn_back").on("tap", function(){
+			if(isSync){
+				return ;
+			}
+			$.post("http://localcall/index", null, function(){});
+		});
+	});
+  </script>
+</head>
+
+ <body style="overflow: hidde">
+	<div id="page-first" data-role="page" >
+		<div class="page-header fixed">
+			<a href="#" class="btn_back"></a>
+			<h1>Sync files from Server</h1>
+			<a href="#" id="btn_setting"></a>
+		</div>
+		<div data-role="content" class="page-content" >
+			
+			
+			<div id="btn_start_sync" >
+				Start Sync
+			</div>
+			<div id="sync_progress">
+				<div id="bar"></div>
+				<div id="number"><span id="counter">0</span>/<span id="count">0</span></div>
+			</div>
+		</div>
+		<div class="dialog">
+			<div id="title">Sync configuration</div>
+			
+			<div id="content" style="padding-right: 10px">
+				<div><input type="url" id="url" value="10.160.247.150" placeholder="VCenter Server Address"/></div>
+                <div><input type="text" id="username" value="root" placeholder="User Name"/></div>
+                <div><input type="password" id="password" value="vmware" placeholder="password"/></div>
+                <div><input type="text" id="path" value="/root/rs" placeholder="server path"/></div>
+                <div id="btn_submit">Finish</div>
+			</div>
+			
+		</div>
+	</div>
+</body>
+</html>

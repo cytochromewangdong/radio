@@ -1,0 +1,28 @@
+//
+//  Mp3ListHolderHelper.h
+//  EastDay
+//
+//  Created by Yang on 13-10-26.
+//  Copyright (c) 2013年 EastDay. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+@class EntityMp3;
+
+static NSString *const MP3HOLDER = @"mp3holder";
+
+@interface Mp3ListHolderHelper : NSObject
++(void)addItem:(EntityMp3 *)item;
++(void)removeItem:(EntityMp3 *)item;
++(void)insertItem:(EntityMp3 *)item index:(NSInteger)index;
++(void)removeAllItem;
++(void)updateItemStatus:(EntityMp3 *)item status:(NSInteger)status;
++(void)updateItemReadStatus:(EntityMp3 *)item status:(BOOL)status;
++(void)updateAllItemStatus:(NSInteger)status;
+
++(NSMutableArray *)getAllItem;
+
++(NSInteger)getLastIndex;
++(void)setLastIndex:(NSInteger)playIndex;
+
+@end

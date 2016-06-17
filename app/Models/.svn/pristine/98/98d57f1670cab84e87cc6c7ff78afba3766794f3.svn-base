@@ -1,0 +1,104 @@
+//
+//  MCategory.m
+//  ExampleApp
+//
+//  Created by wang dong on 4/13/14.
+//  Copyright (c) 2014 Thong Nguyen. All rights reserved.
+//
+
+#import "MCategory.h"
+
+@implementation MCategory
+@dynamic layouttype;
+-(NSString*) layouttype
+{
+    return [self.dataDict valueForKey:@"layouttype"];
+}
+-(void) setLayouttype:(NSString *)layouttype
+{
+    [self.dataDict setValue:layouttype forKey:@"layouttype"];
+}
+
+@dynamic module;
+-(NSString*) module
+{
+    return [self.dataDict valueForKey:@"module"];
+}
+-(void) setModule:(NSString *)module
+{
+    [self.dataDict setValue:module forKey:@"module"];
+}
+@dynamic classid;
+-(NSString*) classid
+{
+    return [self.dataDict valueForKey:@"classid"];
+}
+-(void) setClassid:(NSString*) classid
+{
+    [self.dataDict setValue: classid forKey:@"classid"];
+}
+@dynamic no;
+-(NSString*) no
+{
+    return [self.dataDict valueForKey:@"no"];
+}
+-(void) setNo:(NSString*) no
+{
+    [self.dataDict setValue: no forKey:@"no"];
+}
+
+@dynamic classname;
+-(NSString*) classname
+{
+    return [self.dataDict valueForKey:@"classname"];
+}
+-(void) setClassname:(NSString*) classname
+{
+    [self.dataDict setValue: classname forKey:@"classname"];
+}
+@dynamic classurl;
+-(NSString*) classurl
+{
+    return [self.dataDict valueForKey:@"classurl"];
+}
+-(void) setClassurl:(NSString*) classurl
+{
+    [self.dataDict setValue: classurl forKey:@"classurl"];
+}
+@dynamic recommend;
+-(BOOL) recommend
+{
+    return [[self.dataDict valueForKey:@"recommend"] boolValue];
+}
+-(void) setRecommend:(BOOL)recommend
+{
+    [self.dataDict setValue:recommend?@"true":@"false" forKey:@"recommend"];
+}
+@dynamic fixed;
+-(BOOL)fixed
+{
+    return [[self.dataDict valueForKey:@"fixed"] boolValue];
+}
+-(void)setFixed:(BOOL)fixed
+{
+    [self.dataDict setValue:fixed?@"true":@"false" forKey:@"fixed"];
+}
+@dynamic iscomment;
+-(BOOL)iscomment
+{
+    return [[self.dataDict valueForKey:@"iscomment"] boolValue];
+}
+-(void)setIscomment:(BOOL)iscomment
+{
+    [self.dataDict setValue:iscomment?@"true":@"false" forKey:@"iscomment"];
+}
+@dynamic canPostAudio;
+-(BOOL)canPostAudio
+{
+    return [[self.dataDict valueForKey:@"canPostAudio"] boolValue];
+}
+-(void)setCanPostAudio:(BOOL)canPostAudio
+{
+    [self.dataDict setValue:canPostAudio?@"true":@"false" forKey:@"canPostAudio"];
+}
+@end

@@ -1,0 +1,20 @@
+//
+//  ShareAccount.m
+//  EastDay
+//
+//  Created by Yang on 13-9-10.
+//  Copyright (c) 2013年 EastDay. All rights reserved.
+//
+
+#import "ShareAccount.h"
+
+
+@implementation ShareAccount
+
+@dynamic access_token;
+@dynamic access_type;
+@dynamic password;
+@dynamic typeid;
+@dynamic username;
+
+@end

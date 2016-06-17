@@ -1,0 +1,13 @@
+//
+//  AlarmCom.h
+//  EastDay
+//
+//  Created by wang dong on 4/20/14.
+//  Copyright (c) 2014 EastDay. All rights reserved.
+//
+
+#import "BaseModel.h"
+
+@interface AlarmCom : BaseModel
+@property (weak)NSMutableArray* newses;
+@end

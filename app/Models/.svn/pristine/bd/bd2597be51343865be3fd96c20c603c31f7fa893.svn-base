@@ -1,0 +1,43 @@
+//
+//  SimpleRow.h
+//  ExampleApp
+//
+//  Created by wang dong on 4/13/14.
+//  Copyright (c) 2014 Thong Nguyen. All rights reserved.
+//
+#import <Foundation/Foundation.h>
+#import "BaseModel.h"
+#import "EntityMp3.h"
+@interface SimpleTopicGroupItem : NSObject
+@property(strong) NSString* sourcename;
+@property(strong) NSString* moreurl;
+@property(strong) NSString* articletype;
+@end
+
+@interface SimpleRow : BaseModel
+@property (weak)NSString* module;// 1 新闻 2 图集 3 有点意思
+@property (weak)NSString* parentclassid;
+@property (weak)NSString* name;// 用做专题名字，我会通过XML置换
+@property (weak)NSString* articletype;// 专题时： 0为稿件 1为图集 新闻时：0为稿件 1为专题 2为活动
+@property (weak)NSString* title;
+@property (weak)NSString* oldtitle;
+@property (weak)NSString* newstime;
+@property (weak)NSString* timestamp;
+@property (weak)NSString* imgurl;
+@property (weak)NSString* titleurl;
+@property (weak)NSString* audio;
+@property (weak)NSString* sourcename;
+@property (weak)NSString* desc;
+@property (weak)NSString* imgurl1;
+@property (weak)NSString* imgurl2;
+@property (weak)NSString* imgurl3;
+@property (weak)NSString* no;
+@property (weak)NSString* icontype;//Icontype=0；为无标签 1为专题；2为置顶；3为热门；
+@property (weak)NSString* src;
+@property (weak)NSString* moreurl;
+@property (weak)NSString* idleaf;
+@property (weak)NSString* ancestor_id;
+@property (weak)NSString* enabled;// 0 活动结束 1 活动正在进行 2活动在准备中
+-(EntityMp3*) convertToMp3Item;
+//@property (weak)NSString* classurl;
+@end

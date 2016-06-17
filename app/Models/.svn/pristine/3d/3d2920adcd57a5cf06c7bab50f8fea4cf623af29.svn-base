@@ -1,0 +1,220 @@
+//
+//  Mp3ListHolderHelper.m
+//  EastDay
+//
+//  Created by Yang on 13-10-26.
+//  Copyright (c) 2013年 EastDay. All rights reserved.
+//
+
+#import "Mp3ListHolderHelper.h"
+
+#import "EntityMp3.h"
+
+@interface Mp3ListHolderHelper(){
+    
+    
+}
+
++(NSDictionary *)covertEntity:(EntityMp3 *)entity;
+
+@end
+@implementation Mp3ListHolderHelper
+
++(NSDictionary *)covertEntity:(EntityMp3 *)entity{
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:entity.title,@"title",entity.mp3Url,@"mp3Url",[NSNumber numberWithInteger:entity.downloaded],@"status", nil];
+    
+    return dict;
+}
+
++(void)addItem:(EntityMp3 *)item{
+    NSArray *list = [[NSUserDefaults standardUserDefaults] objectForKey:MP3HOLDER];
+    NSMutableArray *newList  = nil;
+    if (list==nil){
+        newList = [[NSMutableArray alloc] init];
+    } else {
+        newList = [list mutableCopy];
+    }
+    
+    [newList addObject:[self covertEntity:item]];
+    
+    list = [NSArray arrayWithArray:newList];
+    [[NSUserDefaults standardUserDefaults] setObject:list forKey:MP3HOLDER];
+}
+
++(void)removeItem:(EntityMp3 *)item{
+    NSArray *list = [[NSUserDefaults standardUserDefaults] objectForKey:MP3HOLDER];
+    NSMutableArray *newList  = nil;
+    if (list==nil){
+        newList = [[NSMutableArray alloc] init];
+    } else {
+        newList = [list mutableCopy];
+    }
+    
+    int itemIndex = -1;
+    for (int i=0; i<[list count]; i++){
+        NSDictionary *dictItem = [list objectAtIndex:i];
+        if ([item.mp3Url isEqualToString:[dictItem objectForKey:@"mp3Url"]]){
+            itemIndex = i;
+        }
+    }
+    
+    if (itemIndex!=-1){
+        [newList removeObjectAtIndex:itemIndex];
+        list = [NSArray arrayWithArray:newList];
+        [[NSUserDefaults standardUserDefaults] setObject:list forKey:MP3HOLDER];
+
+    }
+    
+    NSLog(@"++++++Mp3ListHolderHelper removeItem finish!");
+}
+
++(void)insertItem:(EntityMp3 *)item index:(NSInteger)index{
+    NSArray *list = [[NSUserDefaults standardUserDefaults] objectForKey:MP3HOLDER];
+    NSMutableArray *newList  = nil;
+    if (list==nil){
+        newList = [[NSMutableArray alloc] init];
+    } else {
+        newList = [list mutableCopy];
+    }
+    
+    [newList insertObject:[self covertEntity:item] atIndex:index];
+    
+    list = [NSArray arrayWithArray:newList];
+    [[NSUserDefaults standardUserDefaults] setObject:list forKey:MP3HOLDER];
+
+}
+
++(void)removeAllItem{
+    NSArray *list = [[NSUserDefaults standardUserDefaults] objectForKey:MP3HOLDER];
+    NSMutableArray *newList  = nil;
+    if (list==nil){
+        newList = [[NSMutableArray alloc] init];
+    } else {
+        newList = [list mutableCopy];
+    }
+    
+    [newList removeAllObjects];
+    
+    list = [[NSArray alloc] init];
+    [[NSUserDefaults standardUserDefaults] setObject:list forKey:MP3HOLDER];
+
+    
+}
+
++(void)updateItemStatus:(EntityMp3 *)item status:(NSInteger)status{
+    NSArray *list = [[NSUserDefaults standardUserDefaults] objectForKey:MP3HOLDER];
+    NSMutableArray *newList  = nil;
+    if (list==nil){
+        newList = [[NSMutableArray alloc] init];
+    } else {
+        newList = [list mutableCopy];
+    }
+    
+    if ([newList count]<1){
+        return ;
+    }
+    item.downloaded = status;
+    for (int i=0; i<[list count]; i++){
+        NSDictionary *oldItem = [list objectAtIndex:i];
+        if ([[oldItem objectForKey:@"mp3Url"] isEqual:item.mp3Url]){
+            NSDictionary *newItem = [[NSDictionary alloc] initWithObjectsAndKeys:item.title,@"title",item.mp3Url,@"mp3Url",[NSNumber numberWithInteger:status],@"status", nil];
+            
+            [newList replaceObjectAtIndex:i withObject:newItem];
+        }
+    }
+    
+    list = [NSArray arrayWithArray:newList];
+    [[NSUserDefaults standardUserDefaults] setObject:list forKey:MP3HOLDER];
+    
+    NSNotification *notification = [NSNotification notificationWithName:@"UPDATE_DOWNLOAD_STATUS" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+    
+}
+
++(void)updateAllItemStatus:(NSInteger)status{
+    NSArray *list = [[NSUserDefaults standardUserDefaults] objectForKey:MP3HOLDER];
+    NSMutableArray *newList  = nil;
+    if (list==nil){
+        newList = [[NSMutableArray alloc] init];
+    } else {
+        newList = [list mutableCopy];
+    }
+    
+    if ([newList count]<1){
+        return ;
+    }
+    
+    for (int i=0; i<[list count]; i++){
+        NSDictionary *oldItem = [list objectAtIndex:i];
+        
+            NSDictionary *newItem = [[NSDictionary alloc] initWithObjectsAndKeys:[oldItem objectForKey:@"title"],@"title",[oldItem objectForKey:@"mp3Url"],@"mp3Url",[NSNumber numberWithInteger:status],@"status", nil];
+            
+            [newList replaceObjectAtIndex:i withObject:newItem];
+        
+    }
+    
+    list = [NSArray arrayWithArray:newList];
+    [[NSUserDefaults standardUserDefaults] setObject:list forKey:MP3HOLDER];
+    
+    NSNotification *notification = [NSNotification notificationWithName:@"UPDATE_DOWNLOAD_STATUS" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+    
+}
+
+
+
++(void)updateItemReadStatus:(EntityMp3 *)item status:(BOOL)status{
+    NSArray *list = [[NSUserDefaults standardUserDefaults] objectForKey:MP3HOLDER];
+    NSMutableArray *newList  = nil;
+    if (list==nil){
+        newList = [[NSMutableArray alloc] init];
+    } else {
+        newList = [list mutableCopy];
+    }
+    
+    if ([newList count]<1){
+        return ;
+    }
+    
+    for (int i=0; i<[list count]; i++){
+        NSDictionary *oldItem = [list objectAtIndex:i];
+        if ([[oldItem objectForKey:@"mp3Url"] isEqual:item.mp3Url]){
+            NSDictionary *newItem = [[NSDictionary alloc] initWithObjectsAndKeys:item.title,@"title",item.mp3Url,@"mp3Url",[NSNumber numberWithBool:status],@"status", nil];
+            
+            [newList replaceObjectAtIndex:i withObject:newItem];
+        }
+    }
+    
+    list = [NSArray arrayWithArray:newList];
+    [[NSUserDefaults standardUserDefaults] setObject:newList forKey:MP3HOLDER];
+    
+    NSNotification *notification = [NSNotification notificationWithName:@"UPDATE_READ_STATUS" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+
+}
+
++(NSMutableArray *)getAllItem{
+    NSArray *list = [[NSUserDefaults standardUserDefaults] objectForKey:MP3HOLDER];
+    
+    //需要把所有的NSDict转换为EntityMp3
+    NSMutableArray *objectArray = [[NSMutableArray alloc] init];
+    for (NSDictionary *item in list){
+        EntityMp3 *mp3 = [[EntityMp3 alloc] init];
+        mp3.title = [item objectForKey:@"title"];
+        mp3.mp3Url = [item objectForKey:@"mp3Url"];
+        mp3.downloaded = [[item objectForKey:@"status"] integerValue];
+        
+        [objectArray addObject:mp3];
+    }
+    return objectArray;
+}
+
++(NSInteger)getLastIndex{
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:@"lastIndex"] integerValue];
+}
+
++(void)setLastIndex:(NSInteger)playIndex{
+    NSNumber *index = [NSNumber numberWithInteger:playIndex];
+    [[NSUserDefaults standardUserDefaults] setObject:index forKey:@"lastIndex"];
+}
+@end

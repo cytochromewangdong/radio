@@ -1,0 +1,17 @@
+//
+//  Subscriptioned.h
+//  EastDay
+//
+//  Created by YangShen on 13-10-1.
+//  Copyright (c) 2013年 EastDay. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+
+
+@interface Subscriptioned : NSManagedObject
+
+@property (nonatomic, retain) NSString * subid;
+
+@end

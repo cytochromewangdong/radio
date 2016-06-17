@@ -1,0 +1,42 @@
+//
+//  EntityOffLineCache.h
+//  EastDay
+//
+//  Created by YangShen on 13-10-2.
+//  Copyright (c) 2013年 EastDay. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+
+
+@interface EntityOffLineCache : NSManagedObject
+
+@property (nonatomic, retain) NSString * classid;
+@property (nonatomic, retain) NSString * classimage;
+@property (nonatomic, retain) NSString * classname;
+@property (nonatomic, retain) NSString * classoldtitle;
+@property (nonatomic, retain) NSString * classtitle;
+@property (nonatomic, retain) NSString * classurl;
+@property (nonatomic, retain) NSString * detail_audiopath;
+@property (nonatomic, retain) NSString * detail_befrom;
+@property (nonatomic, retain) NSString * detail_id;
+@property (nonatomic, retain) NSString * detail_newstime;
+@property (nonatomic, retain) NSString * detail_ptype;
+@property (nonatomic, retain) NSString * detail_title;
+@property (nonatomic, retain) NSString * detail_weburl;
+@property (nonatomic, retain) NSString * detail_writer;
+@property (nonatomic, retain) NSNumber * mp3_done;
+@property (nonatomic, retain) NSString * news_audio;
+@property (nonatomic, retain) NSString * news_id;
+@property (nonatomic, retain) NSString * news_oldtitle;
+@property (nonatomic, retain) NSString * news_time;
+@property (nonatomic, retain) NSString * news_timestamp;
+@property (nonatomic, retain) NSString * news_title;
+@property (nonatomic, retain) NSString * news_titleurl;
+@property (nonatomic, retain) NSNumber * no;
+@property (nonatomic, retain) NSString * recommend;
+@property (nonatomic, retain) NSString * detail_imgs;
+@property (nonatomic, retain) NSString * detail_content;
+
+@end

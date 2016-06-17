@@ -1,0 +1,16 @@
+//
+//  OfflineDataHelper.h
+//  EastDay
+//
+//  Created by Yang on 13-10-4.
+//  Copyright (c) 2013年 EastDay. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface OfflineDataHelper : NSObject
++(id)sharedHelper;
+
+-(NSMutableArray *)getMySub;
+-(NSMutableArray *)getSubList:(NSString *)classUrl;
+@end

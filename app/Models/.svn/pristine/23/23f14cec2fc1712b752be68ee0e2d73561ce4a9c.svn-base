@@ -1,0 +1,305 @@
+//
+//  SimpleCategoryCom.m
+//  EastDay
+//
+//  Created by wang dong on 4/17/14.
+//  Copyright (c) 2014 EastDay. All rights reserved.
+//
+
+#import "SimpleCategoryCom.h"
+#import "MCategory.h"
+#import "AlarmCom.h"
+#import "AlarmHelper.h"
+#import "GlobalDataWrapper.h"
+
+NSString* const NEWS_TYPE=@"1";
+NSString* const PICTURE_TYPE=@"2";
+NSString* const AMUSING_TYPE=@"3";
+NSString* const ALL_CATEGORY_TYPE=@"0";
+@implementation SimpleCategoryCom
++(SimpleCategoryCom*) wrapper:(NSArray*)category
+{
+   SimpleCategoryCom *com= [[SimpleCategoryCom alloc]init];
+    com.newses = (NSMutableArray*)category;
+    return com;
+}
++(NSArray*) getCategoryByType:(NSArray *)allCategory type:(NSString *)type
+{
+    if([ALL_CATEGORY_TYPE isEqualToString:type])
+    {
+        return allCategory;
+    }
+    NSMutableArray* result = [[NSMutableArray alloc]init];
+    for (MCategory *category in allCategory) {
+        if([type isEqualToString:category.module])
+        {
+            [result addObject:category];
+        }
+    }
+    return result;
+}
++(NSArray*) getRecommendCategory:(NSArray *)allCategory{
+    NSMutableArray* result = [[NSMutableArray alloc]init];
+    for (MCategory *category in allCategory) {
+        if(category.fixed)
+        {
+            [result addObject:category];
+        }
+    }
+    for (MCategory *category in allCategory) {
+        if(!category.fixed && category.recommend)
+        {
+            [result addObject:category];
+        }
+    }
+    return result;
+}
+
++(NSArray*) getUnrecommendCategory:(NSArray *)allCategory{
+    NSMutableArray* result = [[NSMutableArray alloc]init];
+    for (MCategory *category in allCategory) {
+        if(!category.fixed && !category.recommend)
+        {
+            [result addObject:category];
+        }
+    }
+    return result;
+}
+-(NSArray*) getPostList
+{
+    NSMutableArray* result = [[NSMutableArray alloc]init];
+    for (MCategory *category in self.newses) {
+        if(category.canPostAudio)
+        {
+            [result addObject:category];
+        }
+    }
+    return result;
+}
+-(NSArray*) getUnrecommendCategory
+{
+    return [SimpleCategoryCom getUnrecommendCategory:self.newses];
+}
+-(NSArray*) getNewsUnrecommendCategory
+{
+    return [SimpleCategoryCom getUnrecommendCategory:[self getNewsCategory]];
+}
+-(NSArray*) getPictureUnrecommendCategory
+{
+    return [SimpleCategoryCom getUnrecommendCategory:[self getPictureCategory]];
+}
+-(NSArray*) getAmusingUnrecommendCategory
+{
+    return [SimpleCategoryCom getUnrecommendCategory:[self getAmusingCategory]];
+   
+}
+
+-(NSArray*)getNewsCategory
+{
+    return [SimpleCategoryCom getCategoryByType:self.newses type:NEWS_TYPE];
+}
+-(NSArray*)getPictureCategory
+{
+    return [SimpleCategoryCom getCategoryByType:self.newses type:PICTURE_TYPE];
+}
+-(NSArray*)getAmusingCategory
+{
+    return [SimpleCategoryCom getCategoryByType:self.newses type:AMUSING_TYPE];
+}
+-(NSMutableArray*) newses
+{
+    NSMutableArray* ret=[[NSMutableArray alloc]init];
+    NSMutableArray* rawData = [self.dataDict valueForKey:@"Newses"];
+    if(rawData) {
+        for(NSMutableDictionary *row in rawData) {
+            MCategory* objMyAccount=[[MCategory alloc]init];
+            objMyAccount.dataDict=row;
+            [ret addObject:objMyAccount];
+        }
+    }
+    return ret;
+}
+-(void) setNewses:(NSMutableArray*) paramNewses
+{
+    if(paramNewses){
+        NSMutableArray* rawDataRows=[[NSMutableArray alloc]init];
+        for(MCategory *row in paramNewses) {
+            [rawDataRows addObject:row.dataDict];
+        }
+        [self.dataDict setValue: rawDataRows forKey:@"Newses"];
+    } else
+        [self.dataDict setValue: nil forKey:@"Newses"];
+}
+-(MCategory*)findCategoryById:(NSString *)classid
+{
+    //self.newses
+    MCategory* result = nil;
+    for(MCategory *row in self.newses) {
+        if([row.classid isEqualToString:classid])
+        {
+            result = row;
+            break;
+        }
+    }
+    return result;
+}
+-(NSArray*) universallGetRecommendCategory:(NSString*)type
+{
+      return [SimpleCategoryCom getRecommendCategory:[SimpleCategoryCom getCategoryByType:self.newses type:type]];
+}
+-(NSArray*) universallGetUnrecommendCategory:(NSString*)type
+{
+    return [SimpleCategoryCom getUnrecommendCategory:[SimpleCategoryCom getCategoryByType:self.newses type:type]];
+}
+-(NSArray*) getCategoryByType:(NSString*)type
+{
+    return [SimpleCategoryCom getCategoryByType:self.newses type:type];
+}
+-(NSArray*) getRecommendCategory
+{
+    return [SimpleCategoryCom getRecommendCategory:self.newses];
+}
+-(NSArray*) getNewsRecommendCategory
+{
+    return [SimpleCategoryCom getRecommendCategory:[self getNewsCategory]];
+}
+-(NSArray*) getPictureRecommendCategory
+{
+    return [SimpleCategoryCom getRecommendCategory:[self getPictureCategory]];
+}
+-(NSArray*) getAmusingRecommendCategory
+{
+    return [SimpleCategoryCom getRecommendCategory:[self getAmusingCategory]];
+}
+-(BOOL) mergeNewComFromServer:(SimpleCategoryCom*) com
+{
+    BOOL hasChange = NO;
+    NSMutableArray* result = [[NSMutableArray alloc]init];
+    for (MCategory *category in self.newses) {
+        BOOL found = NO;
+        for (MCategory *newCategory in com.newses) {
+            if([category.classid isEqualToString:newCategory.classid])
+            {
+                [result addObject:category];
+                [newCategory setObject:@"1" forKey:@"$$flag"];
+                found = YES;
+                break;
+            }
+        }
+        if(found)
+        {
+            hasChange =YES;
+        }
+
+    }
+    for (MCategory *newCategory in com.newses) {
+        if(![[newCategory objectForKey:@"$$flag"] isEqualToString:@"1"])
+        {
+            [result addObject:newCategory];
+            [newCategory.dataDict removeObjectForKey:@"$$flag"];
+            newCategory.recommend = NO;
+            hasChange = YES;
+            //break;
+        }
+    }
+    self.newses = result;
+    return hasChange;
+}
+-(void) mark:(NSString*) classid
+{
+    NSMutableArray* result = [[NSMutableArray alloc]init];
+    MCategory* lastCategory = nil;
+    for (MCategory *category in self.newses) {
+
+        if([category.classid isEqualToString:classid])
+        {
+            if(category.recommend)
+            {
+                return;
+            } else {
+                lastCategory = category;
+                lastCategory.recommend = YES;
+            }
+            //break;
+        } else {
+            [result  addObject:category];
+        }
+    }
+    if (nil != lastCategory) {
+        [result  addObject:lastCategory];   
+    }
+    self.newses = result;
+}
+
+
+-(BOOL) exitRecNewsById:(NSString *)classId
+{
+    BOOL found = NO;
+    
+    NSArray *newsArray = [self getNewsRecommendCategory];
+    for (MCategory *cate in newsArray) {
+        if ([cate.classid isEqualToString:classId]) {
+            found = YES;
+            break;
+        }
+    }
+    return found;
+}
+
+-(void) checkAlarmNews:(AlarmRow *)alarmRow
+{
+    NSMutableArray *clsArr = alarmRow.classidlist;
+    
+    NSMutableArray *removedArr = [[NSMutableArray alloc] init];
+    for (NSString *clsId in clsArr) {
+        if (![self exitRecNewsById:clsId]) {
+            [removedArr addObject:clsId];
+        }
+    }
+    
+    if (removedArr.count > 0) {
+        [clsArr removeObjectsInArray:removedArr];
+    }
+    
+    alarmRow.classidlist = clsArr;
+}
+
+-(void)updateAlarm
+{
+    AlarmCom *ac = [GlobalDataWrapper getGlobalAlarmCom];
+    NSArray *rowArr = ac.newses;
+    for (AlarmRow *row in rowArr) {
+        [self checkAlarmNews:row];
+    }
+}
+
+-(void) updateSortDeleteAdd:(NSMutableArray*) sortedList categoryType:(NSString*) categoryType
+{
+    if([ALL_CATEGORY_TYPE isEqualToString:categoryType])
+    {
+        self.newses = sortedList;
+    }
+    else
+    {
+        NSMutableArray* result = [[NSMutableArray alloc]init];
+        int i = 0;
+        for(MCategory *category in self.newses)
+        {
+            if([categoryType isEqualToString:category.module])
+            {
+                if([sortedList count]>i)
+                {
+                    [result addObject:[sortedList objectAtIndex:i++]];
+                }
+            } else
+            {
+                [result addObject:category];
+            }
+        }
+        self.newses = result;
+    }
+    
+    [self updateAlarm];
+   
+}
+@end

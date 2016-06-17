@@ -1,0 +1,41 @@
+//
+//  EntityOffLineCache.m
+//  EastDay
+//
+//  Created by YangShen on 13-10-2.
+//  Copyright (c) 2013年 EastDay. All rights reserved.
+//
+
+#import "EntityOffLineCache.h"
+
+
+@implementation EntityOffLineCache
+
+@dynamic classid;
+@dynamic classimage;
+@dynamic classname;
+@dynamic classoldtitle;
+@dynamic classtitle;
+@dynamic classurl;
+@dynamic detail_audiopath;
+@dynamic detail_befrom;
+@dynamic detail_id;
+@dynamic detail_newstime;
+@dynamic detail_ptype;
+@dynamic detail_title;
+@dynamic detail_weburl;
+@dynamic detail_writer;
+@dynamic mp3_done;
+@dynamic news_audio;
+@dynamic news_id;
+@dynamic news_oldtitle;
+@dynamic news_time;
+@dynamic news_timestamp;
+@dynamic news_title;
+@dynamic news_titleurl;
+@dynamic no;
+@dynamic recommend;
+@dynamic detail_imgs;
+@dynamic detail_content;
+
+@end

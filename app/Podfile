@@ -1,0 +1,13 @@
+# Uncomment this line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'VSanLab' do
+  # Uncomment this line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+  #s.frameworks = "MessageUI", "QuartzCore", "Security", "CFNetwork", "AddressBook"
+  # Pods for VSanLab
+#  pod 'SBJson', '~> 3.0.0'
+#  pod 'AFNetworking', '~> 2.5'
+  pod 'SVProgressHUD'
+  pod 'NMSSH'
+end

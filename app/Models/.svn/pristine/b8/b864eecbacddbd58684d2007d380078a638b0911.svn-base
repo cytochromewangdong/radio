@@ -1,0 +1,17 @@
+//
+//  SplashScreen.m
+//  EastDay
+//
+//  Created by Yang on 13-9-11.
+//  Copyright (c) 2013年 EastDay. All rights reserved.
+//
+
+#import "SplashScreen.h"
+
+
+@implementation SplashScreen
+
+@dynamic phone_type;
+@dynamic phone_pic;
+
+@end

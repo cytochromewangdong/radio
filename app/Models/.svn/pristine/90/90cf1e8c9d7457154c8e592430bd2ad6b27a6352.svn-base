@@ -1,0 +1,201 @@
+//
+//  SimpleAllCom.m
+//  EastDay
+//
+//  Created by wang dong on 4/17/14.
+//  Copyright (c) 2014 EastDay. All rights reserved.
+//
+
+#import "SimpleAllCom.h"
+#import "SimpleRow.h"
+@implementation SimpleAllCom
+@dynamic type;
+-(NSString*) type
+{
+    return [self.dataDict valueForKey:@"type"];
+}
+-(void) setType:(NSString *)type
+{
+    [self.dataDict setValue:type forKey:@"type"];
+}
+-(void)appendMoreNewses:(SimpleAllCom *)newData
+{
+    if(newData)
+    {
+        self.page = newData.page;
+        NSMutableArray* newses = self.newses;
+        NSMutableArray* copyNewses = self.newses;
+        for(SimpleRow* newrow in newData.newses)
+        {
+            BOOL found = NO;
+            for(SimpleRow* existedRow in copyNewses)
+            {
+                if([newrow.id isEqualToString:existedRow.id])
+                {
+                    found = YES;
+                }
+            }
+            if(!found)
+            {
+                [newses addObject:newrow];
+            }
+        }
+        //[newses addObjectsFromArray:newData.newses];
+        self.lastTime = newData.lastTime;
+        self.newses = newses;
+    }
+}
+@dynamic sharepicurl;
+-(NSString*) sharepicurl
+{
+    return [self.dataDict valueForKey:@"sharepicurl"];
+}
+-(void) setSharepicurl:(NSString*) sharepicurl
+{
+    [self.dataDict setValue: sharepicurl forKey:@"sharepicurl"];
+}
+
+@dynamic classid;
+-(NSString*) classid
+{
+    return [self.dataDict valueForKey:@"classid"];
+}
+-(void) setClassid:(NSString*) classid
+{
+    [self.dataDict setValue: classid forKey:@"classid"];
+}
+
+@dynamic classname;
+-(NSString*) classname
+{
+    return [self.dataDict valueForKey:@"classname"];
+}
+-(void) setClassname:(NSString*) classname
+{
+    [self.dataDict setValue: classname forKey:@"classname"];
+}
+@dynamic newses;
+-(NSMutableArray*) newses
+{
+    NSMutableArray* ret=[[NSMutableArray alloc]init];
+    NSMutableArray* rawData = [self.dataDict valueForKey:@"Newses"];
+    if(rawData) {
+        for(NSMutableDictionary *row in rawData) {
+            SimpleRow* objMyAccount=[[SimpleRow alloc]init];
+            objMyAccount.dataDict=row;
+            [ret addObject:objMyAccount];
+        }
+    }
+    return ret;
+}
+-(void) setNewses:(NSMutableArray*) paramNewses
+{
+    if(paramNewses){
+        NSMutableArray* rawDataRows=[[NSMutableArray alloc]init];
+        for(SimpleRow *row in paramNewses) {
+            [rawDataRows addObject:row.dataDict];
+        }
+        [self.dataDict setValue: rawDataRows forKey:@"Newses"];
+    } else
+        [self.dataDict setValue: nil forKey:@"Newses"];
+}
+@dynamic imgurl;
+-(NSString*) imgurl
+{
+    return [self.dataDict valueForKey:@"imgurl"];
+}
+-(void) setImgurl:(NSString *)imgurl
+{
+    [self.dataDict setValue:imgurl forKey:@"imgurl"];
+}
+@dynamic oldtitle;
+-(NSString*) oldtitle
+{
+    return [self.dataDict valueForKey:@"oldtitle"];
+}
+-(void) setOldtitle:(NSString *)oldtitle
+{
+    [self.dataDict setValue:oldtitle forKey:@"oldtitle"];
+}
+@dynamic newstime;
+-(NSString*) newstime
+{
+    return [self.dataDict valueForKey:@"newstime"];
+}
+-(void) setNewstime:(NSString *)newstime
+{
+    [self.dataDict setValue:newstime forKey:@"newstime"];
+}
+-(NSArray*) groupTopicBySourceName:(SimpleTopicGroupItem*)item
+{
+    NSMutableArray* result =[NSMutableArray new];
+    id lastInsertArrayObject = nil;
+    [result addObject:item];
+    for(SimpleRow* row in self.newses)
+    {
+        row.articletype = item.articletype;
+        if([@"1" isEqualToString:item.articletype])
+        {
+            if([lastInsertArrayObject isKindOfClass:[NSMutableArray class]])
+            {
+                if([lastInsertArrayObject count]>=2)
+                {
+                    lastInsertArrayObject = [NSMutableArray new];
+                    [result addObject:lastInsertArrayObject];
+                }
+            } else {
+                lastInsertArrayObject = [NSMutableArray new];
+                [result addObject:lastInsertArrayObject];
+            }
+            //lastSourceName.moreurl = row.moreurl;
+            [lastInsertArrayObject addObject:row];
+        } else {
+            [result addObject:row];
+            //lastSourceName.moreurl = row.moreurl;
+            lastInsertArrayObject = nil;
+        }
+    }
+    return result;
+}
+-(NSArray*) groupTopicBySourceName
+{
+    NSMutableArray* result =[NSMutableArray new];
+    [result addObject:self];
+    SimpleTopicGroupItem* lastSourceName = nil;
+    id lastInsertArrayObject = nil;
+    for(SimpleRow* row in self.newses)
+    {
+        if(![lastSourceName.sourcename isEqualToString:row.sourcename])
+        {
+            lastSourceName =[[SimpleTopicGroupItem alloc]init];//[[SimpleTopicGroupItem ]init];
+            [result addObject:lastSourceName];
+            //row.sourcename;
+            lastSourceName.moreurl = row.moreurl;
+            lastSourceName.sourcename = row.sourcename;
+            lastSourceName.articletype = row.articletype;
+            lastInsertArrayObject = nil;
+        }
+        if([@"1" isEqualToString:row.articletype])
+        {
+            if([lastInsertArrayObject isKindOfClass:[NSMutableArray class]])
+            {
+                if([lastInsertArrayObject count]>=2)
+                {
+                    lastInsertArrayObject = [NSMutableArray new];
+                    [result addObject:lastInsertArrayObject];
+                }
+            } else {
+                lastInsertArrayObject = [NSMutableArray new];
+                [result addObject:lastInsertArrayObject];
+            }
+            //lastSourceName.moreurl = row.moreurl;
+            [lastInsertArrayObject addObject:row];
+        } else {
+            [result addObject:row];
+            //lastSourceName.moreurl = row.moreurl;
+            lastInsertArrayObject = nil;
+        }
+    }
+    return result;
+}
+@end

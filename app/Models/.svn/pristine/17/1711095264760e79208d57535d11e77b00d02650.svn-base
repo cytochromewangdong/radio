@@ -1,0 +1,25 @@
+//
+//  SimpleAllCom.h
+//  EastDay
+//
+//  Created by wang dong on 4/17/14.
+//  Copyright (c) 2014 EastDay. All rights reserved.
+//
+
+#import "BaseModel.h"
+#import "SimpleRow.h"
+@interface SimpleAllCom : BaseModel
+//=================it is for topic
+    @property (weak)NSString* classid;
+    @property (weak)NSString* classname;
+    @property (weak)NSString* oldtitle;
+    @property (weak)NSString* imgurl;
+    @property (weak)NSString* type;// 这个属于自定义属性 0新闻 or 图集，1为专题 2. 专题明细 3 图集明细
+    @property (weak)NSString* newstime;
+    @property (weak)NSString* sharepicurl;
+//=================
+	@property (weak)NSMutableArray* newses;
+-(void) appendMoreNewses:(SimpleAllCom*) newData;
+-(NSArray*) groupTopicBySourceName:(SimpleTopicGroupItem*)item;
+-(NSArray*) groupTopicBySourceName;
+@end

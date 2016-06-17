@@ -1,0 +1,49 @@
+//
+//  SimpleLoginModel.h
+//  EastDay
+//
+//  Created by wang dong on 6/28/14.
+//  Copyright (c) 2014 EastDay. All rights reserved.
+//
+
+#import "BaseModel.h"
+@interface ResultModel : BaseModel
+@property(assign) NSInteger message;
+@end
+@interface UploadMode : BaseModel
+//[param setObject:[NSString stringWithFormat:@"%llu",size] forKey:@"size"];
+//[param setObject:[NSString stringWithFormat:@"%u",blocks] forKey:@"blocks"];
+//[param setObject:hashcode forKey:@"hashcode"];
+//[param setObject:[NSString stringWithFormat:@"%d",type] forKey:@"type"];
+//[param setObject:threadid forKey:@"threadid"];
+//[param setObject:orginid forKey:@"orginid"];
+//[param setObject:columnid forKey:@"columnid"];
+@property(weak) NSString* fileName;
+@property(weak) NSString* columnid;
+@property(weak) NSString* orginid;
+@property(weak) NSString* title;
+@property(weak) NSString* threadid;
+@property(assign) NSUInteger type;
+@property(weak) NSString* hashcode;
+@property(assign)unsigned long long size;
+@property(weak) NSString* tid;
+@property(assign) NSInteger blocks;
+@property(assign) NSInteger readybolock;
+@property(weak) NSString* tcontent;
+@end
+@interface SimpleLoginModel : ResultModel
+@property(assign) NSInteger userId;
+@property(weak) NSString* token;
+@property(weak) NSString* nickName;
+@property(assign) NSInteger  userLevel;
+@property(weak) NSString* userScore;
+@property(weak) NSString* eastDayAccount;
+@property(weak) NSString* figureUrl;
+@property(weak) NSString* phoneNumber;
+@property(weak) NSString* realName;
+@property(weak) NSString* gender;//性别：1=男，2=女，3=保密
+@property(weak) NSString* birthday;
+// mobilePhone use phoneNumber
+@property(weak) NSString* email;
+//@property(assign) NSInteger readybolock;
+@end

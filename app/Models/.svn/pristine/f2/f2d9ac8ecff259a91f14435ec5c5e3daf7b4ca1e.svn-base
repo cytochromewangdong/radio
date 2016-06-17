@@ -1,0 +1,23 @@
+//
+//  MCategory.h
+//  ExampleApp
+//
+//  Created by wang dong on 4/13/14.
+//  Copyright (c) 2014 Thong Nguyen. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "BaseModel.h"
+
+@interface MCategory : BaseModel
+@property (weak)NSString* module;// 1 新闻 2 图集 3 有点意思
+@property (weak)NSString* classid;
+@property (weak)NSString* no;
+@property (weak)NSString* classname;
+@property (weak)NSString* classurl;
+@property (weak)NSString* layouttype; // 0 普通版面 1 专题版面 2 活动版面
+@property (assign)BOOL recommend;
+@property (assign)BOOL fixed;
+@property (assign)BOOL iscomment;
+@property (assign)BOOL canPostAudio;
+@end

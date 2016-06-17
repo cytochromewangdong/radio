@@ -1,0 +1,25 @@
+//
+//  EntityMp3.m
+//  EastDay
+//
+//  Created by Yang on 13-10-4.
+//  Copyright (c) 2013年 EastDay. All rights reserved.
+//
+
+#import "EntityMp3.h"
+
+@implementation EntityMp3
+-(BOOL) isEqual:(id)other
+{
+    if(self==other)
+    {
+        return YES;
+    }
+    if([other isKindOfClass:[EntityMp3 class]])
+    {
+        return [self.mp3Url isEqualToString:((EntityMp3*)other).mp3Url];
+    } else {
+        return NO;
+    }
+}
+@end

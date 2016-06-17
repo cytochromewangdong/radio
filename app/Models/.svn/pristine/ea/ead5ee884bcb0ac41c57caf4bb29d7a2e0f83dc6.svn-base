@@ -1,0 +1,286 @@
+//
+//  SimpleLoginModel.m
+//  EastDay
+//
+//  Created by wang dong on 6/28/14.
+//  Copyright (c) 2014 EastDay. All rights reserved.
+//
+
+#import "SimpleLoginModel.h"
+@implementation ResultModel
+@dynamic message;
+-(NSInteger)message
+{
+    return  [[self.dataDict valueForKey:@"message"] integerValue];
+}
+-(void) setMessage:(NSInteger)message
+{
+    [self.dataDict setValue:[[NSNumber alloc]initWithInteger:message] forKey:@"message"];
+}
+@end
+
+@implementation UploadMode
+
+@dynamic tcontent;
+-(NSString*)tcontent
+{
+    return  [self.dataDict valueForKey:@"tcontent"];
+}
+-(void)setTcontent:(NSString *)tcontent
+{
+    [self.dataDict setValue:tcontent forKey:@"tcontent"];
+}
+
+@dynamic title;
+-(NSString*)title
+{
+    return  [self.dataDict valueForKey:@"title"];
+}
+-(void)setTitle:(NSString *)title
+{
+    [self.dataDict setValue:title forKey:@"title"];
+}
+-(BOOL)isExpired
+{
+    NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970];
+    return timeInMiliseconds - self.lastTime>2*60*60;
+}
+-(BOOL) isEqual:(id)other
+{
+    if(self==other)
+    {
+        return YES;
+    }
+    if([other isKindOfClass:[UploadMode class]])
+    {
+        return [self.fileName isEqualToString:((UploadMode*)other).fileName];
+    } else {
+        return NO;
+    }
+}
+- (NSUInteger)hash
+{
+    return [self.fileName hash]; //Must be a unique unsigned integer
+}
+@dynamic fileName;
+-(NSString*)fileName
+{
+    return  [self.dataDict valueForKey:@"fileName"];
+}
+-(void)setFileName:(NSString *)fileName
+{
+    [self.dataDict setValue:fileName forKey:@"fileName"];
+}
+@dynamic  columnid;
+-(NSString*)columnid
+{
+    return  [self.dataDict valueForKey:@"columnid"];
+}
+-(void)setColumnid:(NSString *)columnid
+{
+    [self.dataDict setValue:columnid forKey:@"columnid"];
+}
+//@property(weak) NSString* orginid;
+@dynamic  orginid;
+-(NSString*)orginid
+{
+    return  [self.dataDict valueForKey:@"orginid"];
+}
+-(void)setOrginid:(NSString *)orginid
+{
+    [self.dataDict setValue:orginid forKey:@"orginid"];
+}
+
+@dynamic  threadid;
+-(NSString*)threadid
+{
+    return  [self.dataDict valueForKey:@"threadid"];
+}
+-(void)setThreadid:(NSString *)threadid
+{
+    [self.dataDict setValue:threadid forKey:@"threadid"];
+}
+@dynamic  hashcode;
+-(NSString*)hashcode
+{
+    return  [self.dataDict valueForKey:@"hashcode"];
+}
+-(void)setHashcode:(NSString *)hashcode
+{
+    [self.dataDict setValue:hashcode forKey:@"hashcode"];
+}
+@dynamic type;
+
+-(NSUInteger)type
+{
+    return  [[self.dataDict valueForKey:@"type"]integerValue];
+}
+-(void)setType:(NSUInteger)type
+{
+    [self.dataDict setValue:[[NSNumber alloc]initWithInteger:type] forKey:@"type"];
+}
+@dynamic size;
+-(unsigned long long)size
+{
+    return  [[self.dataDict valueForKey:@"type"]longLongValue];
+}
+-(void)setSize:(unsigned long long)size
+{
+    [self.dataDict setValue:[[NSNumber alloc]initWithLongLong:size] forKey:@"size"];
+}
+//@property(weak) NSString* tid;
+@dynamic tid;
+-(NSString*)tid
+{
+    return  [self.dataDict valueForKey:@"tid"];
+}
+-(void)setTid:(NSString *)tid
+{
+    [self.dataDict setValue:tid forKey:@"tid"];
+}
+@dynamic blocks;
+-(NSInteger)blocks
+{
+    return  [[self.dataDict valueForKey:@"blocks"]integerValue];
+}
+-(void)setBlocks:(NSInteger)blocks
+{
+    [self.dataDict setValue:[[NSNumber alloc]initWithInteger:blocks] forKey:@"blocks"];
+}
+@dynamic readybolock;
+-(NSInteger)readybolock
+{
+    return  [[self.dataDict valueForKey:@"readybolock"]integerValue];
+}
+-(void)setReadybolock:(NSInteger)readybolock
+{
+    [self.dataDict setValue:[[NSNumber alloc]initWithInteger:readybolock] forKey:@"readybolock"];
+}
+@end
+@implementation SimpleLoginModel
+
+-(NSString*)token
+{
+    return  [self.dataDict valueForKey:@"token"];
+}
+-(void)setToken:(NSString *)token
+{
+   [self.dataDict setValue:token forKey:@"token"];
+}
+-(NSInteger)userId
+{
+    return  [[self.dataDict valueForKey:@"userId"]integerValue];
+}
+-(void)setUserId:(NSInteger)userId
+{
+    [self.dataDict setValue:[[NSNumber alloc]initWithInteger:userId] forKey:@"userId"];
+}
+//@property(weak) NSString* nickName;
+@dynamic nickName;
+-(NSString*)nickName
+{
+    return  [self.dataDict valueForKey:@"nickName"];
+}
+-(void)setNickName:(NSString *)nickName
+{
+    [self.dataDict setValue:nickName forKey:@"nickName"];
+}
+//@property(assign) NSInteger  userLevel;
+@dynamic userLevel;
+-(NSInteger)userLevel
+{
+    return  [[self.dataDict valueForKey:@"userLevel"]integerValue];
+}
+-(void)setUserLevel:(NSInteger)userLevel
+{
+    [self.dataDict setValue:[[NSNumber alloc]initWithInteger:userLevel] forKey:@"userLevel"];
+}
+//@property(weak) NSString* userScore;
+@dynamic userScore;
+-(NSString*)userScore
+{
+    return  [self.dataDict valueForKey:@"userScore"];
+}
+-(void)setUserScore:(NSString *)userScore
+{
+    [self.dataDict setValue:userScore forKey:@"userScore"];
+}
+//@property(weak) NSString* eastDayAccount;
+@dynamic eastDayAccount;
+-(NSString*)eastDayAccount
+{
+    return  [self.dataDict valueForKey:@"eastDayAccount"];
+}
+-(void)setEastDayAccount:(NSString *)eastDayAccount
+{
+    [self.dataDict setValue:eastDayAccount forKey:@"eastDayAccount"];
+}
+//@property(weak) NSString* figureUrl;
+@dynamic figureUrl;
+-(NSString*)figureUrl
+{
+    return  [self.dataDict valueForKey:@"figureUrl"];
+}
+-(void)setFigureUrl:(NSString *)figureUrl
+{
+    [self.dataDict setValue:figureUrl forKey:@"figureUrl"];
+}
+
+@dynamic phoneNumber;
+-(NSString*)phoneNumber
+{
+    return  [self.dataDict valueForKey:@"phoneNumber"];
+}
+-(void)setPhoneNumber:(NSString *)phoneNumber
+{
+    [self.dataDict setValue:phoneNumber forKey:@"phoneNumber"];
+}
+//@property(assign) NSInteger readybolock;
+//@dynamic readybolock;
+//-(NSInteger)readybolock
+//{
+//    return  [[self.dataDict valueForKey:@"readybolock"]integerValue];
+//}
+//-(void)setReadybolock:(NSInteger)readybolock
+//{
+//    [self.dataDict setObject:[[NSNumber init]initWithInteger:readybolock] forKey:@"readybolock"];
+//}
+
+@dynamic realName;
+-(NSString*)realName
+{
+    return  [self.dataDict valueForKey:@"realName"];
+}
+-(void)setRealName:(NSString *)realName
+{
+    [self.dataDict setValue:realName forKey:@"realName"];
+}
+@dynamic gender;//性别：1=男，2=女，3=保密
+-(NSString*)gender
+{
+    return  [self.dataDict valueForKey:@"gender"];
+}
+-(void)setGender:(NSString *)gender
+{
+    [self.dataDict setValue:gender forKey:@"gender"];
+}
+@dynamic birthday;
+-(NSString*)birthday
+{
+    return  [self.dataDict valueForKey:@"birthday"];
+}
+-(void)setBirthday:(NSString *)birthday
+{
+    [self.dataDict setValue:birthday forKey:@"birthday"];
+}
+// mobilePhone use phoneNumber
+@dynamic email;
+-(NSString*)email
+{
+    return  [self.dataDict valueForKey:@"email"];
+}
+-(void)setEmail:(NSString *)email
+{
+    [self.dataDict setValue:email forKey:@"email"];
+}
+@end

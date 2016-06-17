@@ -1,0 +1,18 @@
+//
+//  SplashScreen.h
+//  EastDay
+//
+//  Created by Yang on 13-9-11.
+//  Copyright (c) 2013年 EastDay. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+
+
+@interface SplashScreen : NSManagedObject
+
+@property (nonatomic, retain) NSString * phone_type;
+@property (nonatomic, retain) NSString * phone_pic;
+
+@end

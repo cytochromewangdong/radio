@@ -1,0 +1,25 @@
+//
+//  AlarmRow.h
+//  EastDay
+//
+//  Created by wang dong on 4/20/14.
+//  Copyright (c) 2014 EastDay. All rights reserved.
+//
+
+#import "BaseModel.h"
+
+@interface AlarmRow : BaseModel
+@property(weak) NSString* timestamp; //HH:mm:ss 时间
+@property(weak) NSString* type; //默认音乐 0 or  nil 新闻 1
+@property(weak) NSString* defaultmusicname;
+@property(weak) NSString* defaultmusicdisplayname;
+@property(weak) NSString* on; // "1" 打开 "0"关闭
+@property(weak) NSMutableArray* classidlist;
+@property(weak) NSMutableArray* triggerdaylist;
+@property(weak) NSNumber *lastAlert;
+
+//========== below are for computation
+@property(assign) NSInteger daycount;
+@property(strong) NSDate * stardarDay;
+@property(strong) AlarmRow* next;
+@end

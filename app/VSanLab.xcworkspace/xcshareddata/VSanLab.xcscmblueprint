@@ -1,0 +1,34 @@
+{
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "71813805-c705-48a6-a24f-1bb439585f34++3394" : {
+
+    },
+    "71813805-c705-48a6-a24f-1bb439585f34++6403" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "71813805-c705-48a6-a24f-1bb439585f34++3394" : 0,
+    "71813805-c705-48a6-a24f-1bb439585f34++6403" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "743B17D4-7BA6-4D40-B3A3-05A44D2F3B94",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "71813805-c705-48a6-a24f-1bb439585f34++3394" : "VSanLab\/Models\/",
+    "71813805-c705-48a6-a24f-1bb439585f34++6403" : "VSanLab\/AFNetworking\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "VSanLab",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "VSanLab.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/123.125.219.94\/repos\/spider",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "71813805-c705-48a6-a24f-1bb439585f34++3394"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/123.125.219.94\/repos\/spider",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "71813805-c705-48a6-a24f-1bb439585f34++6403"
+    }
+  ]
+}

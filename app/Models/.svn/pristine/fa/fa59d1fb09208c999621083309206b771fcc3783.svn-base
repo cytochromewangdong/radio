@@ -1,0 +1,44 @@
+//
+//  SimpleCategoryCom.h
+//  EastDay
+//
+//  Created by wang dong on 4/17/14.
+//  Copyright (c) 2014 EastDay. All rights reserved.
+//
+
+#import "BaseModel.h"
+#import "MCategory.h"
+extern NSString* const NEWS_TYPE;
+extern NSString* const PICTURE_TYPE;
+extern NSString* const AMUSING_TYPE;
+extern NSString* const ALL_CATEGORY_TYPE;
+
+@interface SimpleCategoryCom : BaseModel
+@property(weak) NSMutableArray* newses;
++(NSArray*) getCategoryByType:(NSArray*) allCategory type:(NSString*) type;
++(SimpleCategoryCom*) wrapper:(NSArray*)category;
+-(NSArray*) getNewsCategory;
+-(NSArray*) getPictureCategory;
+-(NSArray*) getAmusingCategory;
+-(NSArray*) universallGetRecommendCategory:(NSString*)type;
+-(NSArray*) universallGetUnrecommendCategory:(NSString*)type;
+-(NSArray*) getCategoryByType:(NSString*)type;
+-(NSArray*) getRecommendCategory;
+
+-(NSArray*) getPostList;
+
+-(NSArray*) getNewsRecommendCategory;
+-(NSArray*) getPictureRecommendCategory;
+-(NSArray*) getAmusingRecommendCategory;
+
+-(NSArray*) getUnrecommendCategory;
+-(NSArray*) getNewsUnrecommendCategory;
+-(NSArray*) getPictureUnrecommendCategory;
+-(NSArray*) getAmusingUnrecommendCategory;
+
+-(BOOL) mergeNewComFromServer:(SimpleCategoryCom*)com;
+-(MCategory*) findCategoryById:(NSString*)classid;
+-(void) mark:(NSString*) classid;
+-(void) updateSortDeleteAdd:(NSMutableArray*) sortedList categoryType:(NSString*) categoryType;
+
+@end

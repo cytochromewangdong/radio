@@ -1,0 +1,91 @@
+//
+//  AlarmRow.m
+//  EastDay
+//
+//  Created by wang dong on 4/20/14.
+//  Copyright (c) 2014 EastDay. All rights reserved.
+//
+
+#import "AlarmRow.h"
+
+@implementation AlarmRow
+@dynamic on;
+-(NSString*) on
+{
+    return [self.dataDict valueForKey:@"on"];
+}
+-(void) setOn:(NSString *)on
+{
+    [self.dataDict setValue:on forKey:@"on"];
+}
+
+@synthesize next;
+//@property(weak) NSString* timestamp;
+@dynamic timestamp;
+-(NSString*)timestamp
+{
+    return [self.dataDict objectForKey:@"timestamp"];
+}
+-(void) setTimestamp:(NSString *)timestamp
+{
+      return [self.dataDict setValue:timestamp forKey:@"timestamp"];
+}
+//@property(weak) NSString* type; //默认音乐 0 or  nil 新闻 1
+@dynamic type;
+-(NSString*) type
+{
+    return [self.dataDict valueForKey:@"type"];
+}
+-(void) setType:(NSString *)type
+{
+    [self.dataDict setValue:type forKey:@"type"];
+}
+//@property(weak) NSString* defaultmusicname;
+@dynamic defaultmusicdisplayname;
+-(NSString*) defaultmusicdisplayname
+{
+    return [self.dataDict valueForKey:@"defaultmusicdisplayname"];
+}
+-(void) setDefaultmusicdisplayname:(NSString *)defaultmusicdisplayname
+{
+    [self.dataDict setValue:defaultmusicdisplayname forKey:@"defaultmusicdisplayname"];
+}
+
+@dynamic defaultmusicname;
+-(NSString*) defaultmusicname
+{
+    return [self.dataDict valueForKey:@"defaultmusicname"];
+}
+-(void) setDefaultmusicname:(NSString *)defaultmusicname
+{
+    [self.dataDict setValue:defaultmusicname forKey:@"defaultmusicname"];
+}
+//@property(weak) NSMutableArray* classidlist;
+@dynamic classidlist;
+-(NSString*) classidlist
+{
+    return [self.dataDict valueForKey:@"classidlist"];
+}
+-(void) setClassidlist:(NSString *)classidlist
+{
+    [self.dataDict setValue:classidlist forKey:@"classidlist"];
+}
+//@property(weak) NSMutableArray* triggerdaylist;
+@dynamic triggerdaylist;
+-(NSMutableArray*) triggerdaylist
+{
+    return [self.dataDict valueForKey:@"triggerdaylist"];
+}
+-(void) setTriggerdaylist:(NSMutableArray *)triggerdaylist
+{
+    [self.dataDict setValue:triggerdaylist forKey:@"triggerdaylist"];
+}
+@dynamic lastAlert;
+-(NSNumber*) lastAlert{
+    return [self.dataDict valueForKey:@"lastAlert"];
+}
+-(void) setLastAlert:(NSNumber *)lastAlert
+{
+    [self.dataDict setValue:lastAlert forKey:@"lastAlert"];
+}
+@end

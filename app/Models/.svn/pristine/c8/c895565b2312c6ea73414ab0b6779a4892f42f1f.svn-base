@@ -1,0 +1,38 @@
+//
+//  AlarmCom.m
+//  EastDay
+//
+//  Created by wang dong on 4/20/14.
+//  Copyright (c) 2014 EastDay. All rights reserved.
+//
+
+#import "AlarmCom.h"
+#import "AlarmRow.h"
+@implementation AlarmCom
+@dynamic newses;
+-(NSMutableArray*) newses
+{
+    NSMutableArray* ret=[[NSMutableArray alloc]init];
+    NSMutableArray* rawData = [self.dataDict valueForKey:@"Newses"];
+    if(rawData) {
+        for(NSMutableDictionary *row in rawData) {
+            AlarmRow* objMyAccount=[[AlarmRow alloc]init];
+            objMyAccount.dataDict=row;
+            [ret addObject:objMyAccount];
+        }
+    }
+    return ret;
+}
+-(void) setNewses:(NSMutableArray*) paramNewses
+{
+    if(paramNewses){
+        NSMutableArray* rawDataRows=[[NSMutableArray alloc]init];
+        for(AlarmRow *row in paramNewses) {
+            [rawDataRows addObject:row.dataDict];
+        }
+        [self.dataDict setValue: rawDataRows forKey:@"Newses"];
+    } else
+        [self.dataDict setValue: nil forKey:@"Newses"];
+}
+
+@end

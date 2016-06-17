@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Show Case</title>
+    <script src="jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="raphael.js" type="text/javascript" charset="utf-8"></script>
+    <script src="showcase.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var exeShell = function(cmd, callback) {
+            $.ajax({
+                type: "GET",
+                url: "http://localcall/doShell",
+                data: {
+                    url: $("#url").val(),
+                    username: $("#username").val(),
+                    password: $("#password").val(),
+                    cmd: cmd
+                },
+                dataType: "json"
+            }).complete(function(data) {
+                var res = JSON.parse(data.responseText);
+                callback(res);
+            });
+        }
+		
+        var exeRVC = function(rvcCMD, callback) {
+			var  cmd = "rvc 'administrator@vsphere.local':'Admin!23'@localhost -a -q -c '" + rvcCMD + "' -c q";
+			exeShell(cmd, callback);
+        }
+	
+        var draw = function(res) {
+            // get the resposne object from our request to native
+
+            // alert(a.result);
+            if (res.result === 0 && res.data) {
+                r.clear();
+                var lines = res.data.split("\n")
+                    //connections = [],
+                root = r.ellipse(100, 300, 30, 30);
+                setColor(root);
+                makeDragable(root);
+                var startY = 100;
+                var startX = 300;
+                var step = 80;
+                for (var i = 0, cnt = lines.length; i < cnt; i++) {
+                    var t = lines[i];
+                    if (!t) continue;
+                    var x = startX;
+                    var y = startY + step * i;
+                    var w = 50;
+                    var h = 30;
+                    var e = r.rect(x, y, w, h);
+
+                    setColor(e);
+                    makeDragable(e);
+                    e.setPair(r.text(x, y - h / 2, lines[i]).attr({
+                        fill: "white"
+                    }));
+                    r.registerConnection(r.connection(root, e, "#fff"));
+                }
+            }
+        }
+        var el;
+        var r;
+        window.onload = function() {
+
+            r = Raphael("holder", 640, 720);
+
+            //draw({data:"a\nb\nc",result:0});
+        };
+        $(function() {
+            $("#run").on("click", function() {
+
+                exeRVC("ls /localhost/VSAN-DC/computers/VSAN-Cluster/hosts",
+                    function(res) {
+                        if (res.result === 0) {
+                            draw(res);
+                        }
+                    }
+                );
+
+            });
+
+            $("#ls").on("click", function() {
+                
+				exeShell("ls -l " + $("#path").val(), function(res) {
+                        if (res.result === 0) {
+                            alert(res.data);
+                        }
+                    });
+            })
+        })
+    </script>
+    <style type="text/css" media="screen">
+        body {
+            background: white;
+            color: #fff;
+            font: 300 100.1% "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
+        }
+        
+        #leftcontainter {
+            float: left;
+            width: 18%;
+            height: 100%;
+        }
+        
+        #holder {
+            background: #333;
+            height: 90%;
+            left: 20%;
+            /*margin: -240px 0 0 -320px;*/
+            position: absolute;
+            top: 2%;
+            width: 78%;
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+            border: solid 1px #333;
+        }
+        
+        #copy {
+            bottom: 0;
+            font: 300 .7em "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
+            position: absolute;
+            right: 1em;
+            text-align: right;
+        }
+        
+        #copy a {
+            color: #fff;
+        }
+        
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <p>Below is the structure of VCenter</p>
+    <div id="leftcontainter">
+        <div><input type="url" id="url" value="10.160.247.150" placeholder="VCenter Server Address" /></div>
+        <div><input type="text" id="username" value="root" placeholder="User Name" /></div>
+        <div><input type="password" id="password" value="vmware" placeholder="password" /></div>
+        <div><input type="button" id="run" value="TestRun"></input>
+        </div>
+	    <div id="content">
+			 <div><input type="text" id="path" placeholder="path" /></div>
+			 <div>
+				<input type="button" id="ls" value="ls"></input>
+			 </div>
+	    </div>
+
+    </div>
+
+    <div id="holder"></div>
+    <p id="copy">A show case for mobile platform</p>
+</body>
+
+</html>
